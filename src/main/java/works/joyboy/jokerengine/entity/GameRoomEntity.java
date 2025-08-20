@@ -23,6 +23,7 @@ public class GameRoomEntity {
     private long id;
     private GameRoomState state;
     private GameRoomType type;
+    private boolean inPairs;
     private LocalDateTime createdAt;
 
     @ManyToMany(fetch = FetchType.LAZY)

@@ -4,5 +4,5 @@ import works.joyboy.jokerengine.entity.GameRoomType;
 
 import java.util.List;
 
-public record GameRoom(long id, GameRoomType type, List<Player> players) {
+public record GameRoom(long id, GameRoomType type, List<Player> players, boolean inPairs) {
 }

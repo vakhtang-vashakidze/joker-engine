@@ -12,7 +12,7 @@ import works.joyboy.jokerengine.model.GameRoom;
 import works.joyboy.jokerengine.repository.GameRoomRepository;
 import works.joyboy.jokerengine.repository.PlayerRepository;
 import works.joyboy.jokerengine.service.GameRoomService;
-import works.joyboy.jokerengine.util.GameRoomMapper;
+import works.joyboy.jokerengine.entity.EntityMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,17 +33,18 @@ public class GameRoomServiceImpl implements GameRoomService {
         GameRoomEntity room = GameRoomEntity.builder()
                 .type(request.type())
                 .state(GameRoomState.OPEN)
+                .inPairs(request.inPairs())
                 .players(List.of(playerEntity))
                 .build();
         room = gameRoomRepository.save(room);
-        return GameRoomMapper.toDto(room);
+        return EntityMapper.toDto(room);
     }
 
     @Override
     public GameRoom get(long roomId) throws GeneralNotFoundException {
         Optional<GameRoomEntity> gameRoom = gameRoomRepository.findById(roomId);
         if (gameRoom.isPresent()) {
-            return GameRoomMapper.toDto(gameRoom.get());
+            return EntityMapper.toDto(gameRoom.get());
         } else {
             throw new GeneralNotFoundException(NOT_FOUND.getValue());
         }
@@ -52,7 +53,7 @@ public class GameRoomServiceImpl implements GameRoomService {
     @Override
     public List<GameRoom> getAll() {
         List<GameRoomEntity> gameRooms = gameRoomRepository.findAll();
-        return GameRoomMapper.toDto(gameRooms);
+        return EntityMapper.toDto(gameRooms);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class GameRoomServiceImpl implements GameRoomService {
         }
         gameRoom.getPlayers().add(playerEntity);
         gameRoom = gameRoomRepository.save(gameRoom);
-        return GameRoomMapper.toDto(gameRoom);
+        return EntityMapper.toDto(gameRoom);
     }
 
     @Override
